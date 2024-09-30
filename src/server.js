@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -19,7 +20,10 @@ mongoose.connect(mongoURI, {
   useUnifiedTopology: true
 })
   .then(() => console.log('Connected to MongoDB Atlas'))
-  .catch(err => console.log('MongoDB Atlas connection error:', err));
+  .catch(err => console.error('MongoDB Atlas connection error:', err));
+
+// Use the routes
+app.use('/', registrationRoutes);
 
 // API Route for form submission
 app.post('/api/register', async (req, res) => {
@@ -28,7 +32,6 @@ app.post('/api/register', async (req, res) => {
       email,
       fullName,
       phoneNumber,
-      yourEmails,
       modeOfStudy,
       languages,
       trainings,
@@ -42,7 +45,6 @@ app.post('/api/register', async (req, res) => {
       email,
       fullName,
       phoneNumber,
-      yourEmails,
       modeOfStudy,
       languages,
       trainings,
@@ -56,13 +58,10 @@ app.post('/api/register', async (req, res) => {
 
     res.status(201).json({ message: 'Registration successful' });
   } catch (err) {
-    console.error(err);
+    console.error('Error saving registration:', err); // Log the actual error
     res.status(500).json({ error: 'Server error, please try again' });
   }
 });
-
-// Use the routes
-app.use('/', registrationRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

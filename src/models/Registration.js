@@ -1,7 +1,7 @@
 // models/Registration.js
 const mongoose = require('mongoose');
 
-const registrationSchema = new mongoose.Schema({
+const RegistrationSchema = new mongoose.Schema({
   email: { type: String, required: true },
   fullName: { type: String, required: true },
   phoneNumber: { type: String, required: true },
@@ -10,9 +10,7 @@ const registrationSchema = new mongoose.Schema({
   trainings: { type: [String], required: true },
   programOfStudy: { type: String, required: true },
   location: { type: String, required: true },
-  comments: { type: String, required: false }
-}, { timestamps: true }); // Optional: Add timestamps for createdAt and updatedAt
+  comments: { type: String, required: false },
+});
 
-const Registration = mongoose.model('Registration', registrationSchema);
-
-module.exports = Registration;
+module.exports = mongoose.model('Registration', RegistrationSchema);

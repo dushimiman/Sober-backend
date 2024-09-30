@@ -4,11 +4,12 @@ const Registration = require('../models/Registration'); // Adjust the path as ne
 const router = express.Router();
 
 // API Route for getting all registrations
-router.get('/api/registrations', async (req, res) => {
+router.get('/registrations', async (req, res) => {
   try {
     const registrations = await Registration.find();
     res.status(200).json(registrations);
   } catch (error) {
+    console.error('Error fetching registrations:', error); // Log the actual error
     res.status(500).json({ message: 'Failed to fetch registrations' });
   }
 });
