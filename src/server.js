@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const registrationRoutes = require('./routes/registrationRoutes'); 
+const registerInternationalRoutes = require('./routes/registerInternational'); 
 
 const app = express();
 
@@ -21,7 +22,8 @@ mongoose.connect(mongoURI, {
 .catch(err => console.log('MongoDB Atlas connection error:', err));
 
 // Use the registration routes
-app.use('/api', registrationRoutes); // Correctly setting base path to '/api'
+app.use('/api', registrationRoutes);
+app.use('/api/registerinternational', registerInternationalRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
