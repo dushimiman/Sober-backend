@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const registrationRoutes = require('./routes/registrationRoutes'); 
 const registerInternationalRoutes = require('./routes/registerInternational'); 
+const contactRoutes = require('./routes/contact');
 
 const app = express();
 
@@ -24,6 +25,7 @@ mongoose.connect(mongoURI, {
 // Use the registration routes
 app.use('/api', registrationRoutes);
 app.use('/api/registerinternational', registerInternationalRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
