@@ -29,13 +29,29 @@ router.post('/register', async (req, res) => {
   const { email, fullName, phoneNumber, modeOfStudy, languages, trainings, programOfStudy, location, comments } = req.body;
 
   try {
+    // Check if the email already exists in the database
+    const existingRegistration = await Registration.findOne({ email });
+    if (existingRegistration) {
+      return res.status(409).json({ message: 'This email is already registered. Please use a different email.' });
+    }
+
     // Save registration data to the database
-    const newRegistration = new Registration({ email, fullName, phoneNumber, modeOfStudy, languages, trainings, programOfStudy, location, comments });
+    const newRegistration = new Registration({
+      email, 
+      fullName, 
+      phoneNumber, 
+      modeOfStudy, 
+      languages, 
+      trainings, 
+      programOfStudy, 
+      location, 
+      comments
+    });
     await newRegistration.save();
 
     // Send email notification
     const transporter = nodemailer.createTransport({
-      service: 'Gmail', // You can use other services like Outlook or SMTP server
+      service: 'Gmail', 
       auth: {
         user: 'soberclub2024@gmail.com',
         pass: 'bjdtuagsfjlxajrh',
@@ -43,10 +59,10 @@ router.post('/register', async (req, res) => {
     });
 
     const mailOptions = {
-      from: '"Sober Club Rwanda" <soberclub2024@gmail.com>', // Sender address
-      to: email, // List of recipients
-      subject: 'Thank you for registering with Sober Club!', // Subject line
-      text: `Dear ${fullName},\n\nThank you for your interest in Sober Club Languages and Trainings. Your application is well received.\n\nBest regards,\n\nSober Club Rwanda Team.`, // Plain text body
+      from: '"Sober Club Rwanda" <soberclub2024@gmail.com>',
+      to: email,
+      subject: 'Thank you for registering with Sober Club!',
+      text: `Dear ${fullName},\n\nThank you for your interest in Sober Club Languages and Trainings. Your application is well received.\n\nBest regards,\n\nSober Club Rwanda Team.`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -63,5 +79,4 @@ router.post('/register', async (req, res) => {
     return res.status(500).json({ message: 'Registration failed.' });
   }
 });
-
 module.exports = router;
