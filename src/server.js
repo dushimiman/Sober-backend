@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const registrationRoutes = require('./routes/registrationRoutes'); 
 const registerInternationalRoutes = require('./routes/registerInternational'); 
 const contactRoutes = require('./routes/contact');
+const internationalRegistrations = require('./routes/internationalregistrations');
 
 const app = express();
 
@@ -26,6 +27,8 @@ mongoose.connect(mongoURI, {
 app.use('/api', registrationRoutes);
 app.use('/api/registerinternational', registerInternationalRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/internationalregistrations', internationalRegistrations);
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;

@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const Registration = require('../models/Registration'); // Ensure the path is correct
 const router = express.Router();
 
+
 // Nodemailer setup
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Use your email service
